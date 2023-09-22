@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - 5432:5432
+    networks:
+      - shared-network
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+    ports:
+      - 5050:80
+    depends_on:
+      - postgres
+    restart: always
+    networks:
+      - shared-network
+
+  backend: 
+    container_name: backend
+    restart: always
+    image: backend:0.1
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    networks:
+      - shared-network
+    depends_on:
+      - postgres
+
+  frontend: 
+    container_name: frontend
+    restart: always
+    image: frontend:0.1
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    networks:
+      - shared-network
+    depends_on:
+      - backend
+
+networks:
+  shared-network:
