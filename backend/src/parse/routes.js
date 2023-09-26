@@ -1,8 +1,9 @@
 const { Router } = require("express");
-const { parseSql } = require("./controller");
+const { parseSql, getAllColumns } = require("./controller");
 
 const router = Router();
 
 router.post("/", parseSql);
+router.get("/", getAllColumns);
 
 module.exports = router;

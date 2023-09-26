@@ -1,11 +1,10 @@
 import './App.css';
+import ParserPage from './ParserPage';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        
-      </header>
+      <ParserPage />
     </div>
   );
 }
