@@ -1,10 +1,10 @@
 # eaglys_take_home
 
 ### Description
-
+Web application to parse sql statements. Returns a modified verion of the statement with all the column names changed to the hashed version of the column name as well as a map of each column name to the hashed name.
 
 ### Getting Started
-Create 2 .env files, one in the root folder and one in the backend folder. The .env file in the backend folder doesn't need the pg admin credentials
+Create two .env files, one in the root folder and one in the backend folder. The .env file in the backend folder doesn't need the pg admin credentials
 ```
 DB_USER=
 DB_PASSWORD=
@@ -23,11 +23,12 @@ docker-compose build
 ``` 
 to create the docker images. After creating the docker images make sure a database with the given db name exists and that a table called `hashed_columns` exist.
 
-The table should have 2 columns
+The table should have two columns
 ```sql
-column_name: varchar() primary id
+column_name: varchar() primary key
 hashed_column: varchar()
 ```
+Because the hashes always produce the same output for the same input we dont have to worry about duplicates in column_name and it can be unique and the primary key
 
 ### Running
 To run the docker container
